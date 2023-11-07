@@ -40,8 +40,32 @@
             }
         }
 
-        function saveEmpleado(){
-            echo json_encode(array("data"=>null, "error"=>"0", "msg"=>"Guardar", ));
+        function saveEmpleado($POST){
+
+            //$datos = file_get_contents('php://input'); 
+            //var_dump($datos); 
+            
+            if(isset($POST["nombre"])){//verificar la existencia de envio de datos
+                $objDB = new ExtraerDatos();
+
+                $data = array(
+                    "ced"=> $POST["cedula"],
+                    "nom"=> $POST["nombre"],
+                    "dir"=> $POST["direcc"]
+                );
+                
+
+
+                $ejecucion = $objDB->saveEmpleados($data);
+                if($ejecucion){ // Todo se ejecuto correctamente
+                    echo json_encode(array("data"=>null, "error"=>"0", "msg"=>"Empleado registrado", ));                    
+                }else{ // Algo paso mal
+                    echo json_encode(array("data"=>null, "error"=>"1", "msg"=>"Ocurrio un Error", ));
+                }
+                //echo json_encode(array("data"=>null, "error"=>"0", "msg"=>"Empleado registrado" ));
+            }else{
+                echo json_encode(array("data"=>null, "error"=>"2", "msg"=>"Datos incompletos", ));
+            }
         }
 
         function updateEmpleado(){

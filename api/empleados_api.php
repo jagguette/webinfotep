@@ -10,7 +10,9 @@
             break;
 
         case 'POST':
-            $objAPI->saveEmpleado();
+            $_POST = json_decode(file_get_contents("php://input") , true);
+            $objAPI->saveEmpleado($_POST);
+            //echo json_encode(array("data"=>$_POST["cedula"], "error"=>"1", "msg"=>"NO hay datos de empleados", ));
             break;
 
         case 'PUT':
